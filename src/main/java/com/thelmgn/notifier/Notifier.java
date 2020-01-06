@@ -29,16 +29,9 @@ public final class Notifier extends JavaPlugin implements Listener {
                 return false;
             }
             String playerArg = args[0];
-            Player player = (Player) sender; // java screams at me if I don't initialize this
-            boolean found = false;
-            for (Player p : getServer().getOnlinePlayers()) {
-                if (p.getName().equals(playerArg)) {
-                    player = p;
-                    found = true;
-                }
-            }
-            if (!found) {
-                sender.sendMessage("§c[Notifier] No player matched the name '" + playerArg + "'. The argument requires the §lexact§r§c player name.");
+            Player player = getServer().getPlayer(playerArg);
+            if (player == null) {
+                sender.sendMessage("§c[Notifier] No player matched the name '" + playerArg + "'.");
                 return false;
             }
             String[] messageArray = new String[args.length-1];
@@ -49,7 +42,7 @@ public final class Notifier extends JavaPlugin implements Listener {
                 sender.sendMessage("§c[Notifier] You're missing the message argument. Use the following format:");
                 return false;
             }
-            BossBar messagebar = getServer().createBossBar(((Player) sender).getDisplayName() + ": " + message,
+            BossBar messagebar = getServer().createBossBar((sender instanceof Player ? ((Player) sender).getDisplayName() + ": " : "") + message,
                                                             BarColor.BLUE, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
             messagebar.addPlayer(player);
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F);
