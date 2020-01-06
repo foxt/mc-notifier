@@ -1,0 +1,11 @@
+name: Notifier
+version: ${project.version}
+main: com.thelmgn.notifier.Notifier
+prefix: Notifier
+authors: [theLMGN]
+description: Allows you to create boss bar notifications.
+website: https://github.com/thelmgn/mc-notifier
+commands:
+  notify:
+    description: Sends a notification to another player.
+    usage: /<command> <player> <message>
